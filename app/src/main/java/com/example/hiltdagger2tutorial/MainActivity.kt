@@ -14,14 +14,14 @@ import javax.inject.Singleton
 class MainActivity : AppCompatActivity() {
 
     //filed Injection
-    @Inject
-    lateinit var someClass: SomeClass
+//    @Inject
+//    lateinit var someClass: SomeClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        println(someClass.doAThing())
+//        println(someClass.doAThing())
 
 
     }
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 class MyFragment : Fragment() {
     @Inject
     lateinit var someClass:SomeClass
+
 
 }
 
