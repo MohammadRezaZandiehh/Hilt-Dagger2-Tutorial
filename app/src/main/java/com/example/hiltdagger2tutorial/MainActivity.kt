@@ -2,8 +2,10 @@ package com.example.hiltdagger2tutorial
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -17,32 +19,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         println(someClass.doAThing())
-        println(someClass.doSomeOtherThings())
+
 
     }
 }
 
+@AndroidEntryPoint
+class MyFragment : Fragment() {
+    @Inject
+    lateinit var someClass:SomeClass
+}
+
+
+@Singleton
 class SomeClass
 @Inject
 constructor(
-    private val someOtherThing: SomeOtherThing
+
 ) {
 
     fun doAThing(): String {
         return "Look i did a thing !"
     }
-
-    fun doSomeOtherThings(): String {
-        return someOtherThing.doSomeOtherThings()
-    }
-}
-
-class SomeOtherThing
-@Inject
-constructor() {
-
-    fun doSomeOtherThings(): String {
-        return "Look i did other things !"
-    }
-
 }
