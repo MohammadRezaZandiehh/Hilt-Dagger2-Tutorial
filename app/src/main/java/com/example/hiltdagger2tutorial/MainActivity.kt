@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,7 +33,7 @@ class MyFragment : Fragment() {
 }
 
 
-@Singleton
+@ActivityScoped
 class SomeClass
 @Inject
 constructor(
