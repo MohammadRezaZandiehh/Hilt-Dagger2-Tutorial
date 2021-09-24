@@ -1,49 +1,53 @@
-package com.example.hiltdagger2tutorial
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.hiltdagger2tutorial.R
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import dagger.hilt.android.scopes.ActivityScoped
-import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //filed Injection
-//    @Inject
-//    lateinit var someClass: SomeClass
+    @Inject
+    lateinit var someClass: SomeClass
+//    lateinit var someClassImpalementInt: SomeInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        println(someClass.doAThing())
-
-
+        println(someClass.doAThing())
+//        someClassImpalementInt.doAThing()
     }
-}
-
-@AndroidEntryPoint
-class MyFragment : Fragment() {
-    @Inject
-    lateinit var someClass:SomeClass
-
 
 }
 
-
-@FragmentScoped
 class SomeClass
 @Inject
 constructor(
-
+    private val someInterface: SomeInterface
 ) {
-
     fun doAThing(): String {
-        return "Look i did a thing !"
+        return "Look I got: ${someInterface.getAThing()}"
     }
+}
+
+class SomeDependency
+@Inject
+constructor() {
+    fun getAThing(): String {
+        return "A Thing"
+    }
+}
+
+
+//class SomeInterfaceImp() : SomeInterface {
+//    override fun doAThing(): String {
+//        return "do A thing"
+//    }
+//
+//}
+
+interface SomeInterface {
+    fun getAThing(): String
 }
