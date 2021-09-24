@@ -1,10 +1,12 @@
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.hiltdagger2tutorial.R
 import com.google.gson.Gson
-import dagger.Binds
+import com.google.gson.GsonBuilder
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ApplicationComponent
@@ -48,22 +50,22 @@ interface SomeInterface{
     fun getAThing(): String
 }
 
-// ***REMEMBER***
-// Notice this doesn't compile because dagger doesn't know how to build the Gson object, even though we added it to the module.
+// This is the best way and works ALWAYS
 @InstallIn(ApplicationComponent::class)
 @Module
-abstract class MyModule{
+class MyModule{
 
     @Singleton
-    @Binds
-    abstract fun bindSomeDependency(
-        someImpl: SomeInterfaceImpl
-    ): SomeInterface
+    @Provides
+    fun provideSomeInterface(): SomeInterface{
+        return SomeInterfaceImpl()
+    }
 
-    // note this is from the dependency: "com.squareup.retrofit2:converter-gson:2.6.0"
     @Singleton
-    @Binds
-    abstract fun bindGson(
-        gson: Gson
-    ): Gson
+    @Provides
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create()
+    }
 }
